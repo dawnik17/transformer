@@ -18,7 +18,13 @@ class Seq2SeqTransformer(nn.Module):
     ):
         super().__init__()
         self.encoder = Encoder(
-            envocab_size, number_of_layers, head, enc_max_seq_len, dimension, dropout, kernel_sizes
+            envocab_size,
+            number_of_layers,
+            head,
+            enc_max_seq_len,
+            dimension,
+            dropout,
+            kernel_sizes,
         )
         self.decoder = Decoder(
             devocab_size, number_of_layers, head, dec_max_seq_len, dimension, dropout

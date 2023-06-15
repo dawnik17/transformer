@@ -1,4 +1,9 @@
-from src.transformer import MultiHeadedAttention, FeedForwardNet, ResidualConnection, LayerNorm
+from src.transformer import (
+    MultiHeadedAttention,
+    FeedForwardNet,
+    ResidualConnection,
+    LayerNorm,
+)
 import torch.nn as nn
 import copy
 
