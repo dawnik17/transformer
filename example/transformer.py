@@ -20,12 +20,12 @@ class Seq2SeqTransformer(nn.Module):
         super().__init__()
         self.enc_emb = nn.Sequential(
             Embedding(envocab_size, dimension=dimension),
-            PositionalEncoding(enc_max_seq_len, dimension, dropout)
+            PositionalEncoding(enc_max_seq_len, dimension, dropout),
         )
 
         self.dec_emb = nn.Sequential(
             Embedding(devocab_size, dimension=dimension),
-            PositionalEncoding(dec_max_seq_len, dimension, dropout)
+            PositionalEncoding(dec_max_seq_len, dimension, dropout),
         )
 
         self.encoder = Encoder(
@@ -47,7 +47,7 @@ class Seq2SeqTransformer(nn.Module):
         enc_input_vec - [batch, enc_seq_len]
         dec_input_vec - [batch, dec_seq_len]
         encmask - [batch, 1, enc_seq_len]
-        decmask - [batch, dec_seq_len, dec_deq_len] 
+        decmask - [batch, dec_seq_len, dec_deq_len]
 
         Args:
             enc_input_vec (_type_): _description_
@@ -64,4 +64,4 @@ class Seq2SeqTransformer(nn.Module):
         encout = self.encoder(enc_input_vec, encmask)
         decout = self.decoder(dec_input_vec, encout, encmask, decmask)
 
-        return F.log_softmax(self.ffnn(decout), dim=-1) 
+        return F.log_softmax(self.ffnn(decout), dim=-1)
