@@ -138,6 +138,7 @@ class MultiQueryAttention(nn.Module):
         # it is important to understand why 
         # attn_shape is [batch, query_length, heads, key_length]
         # and not [batch, heads, query_length, key_length]
+        # HINT: track the movement of tensor elements when we do reshape/view in lines 154, 167 & 168
         attn_shape = (batch_size, query_length, self.heads, key_length)
 
         # query from - [batch, seqlen, dimension] -> [batch, seqlen * heads, head_dim]
