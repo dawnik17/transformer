@@ -135,7 +135,10 @@ class MultiQueryAttention(nn.Module):
         query_length = query.size(1)
         key_length = key.size(1)
 
-        attn_shape = (batch_size, self.heads, query_length, key_length)
+        # it is important to understand why 
+        # attn_shape is [batch, query_length, heads, key_length]
+        # and not [batch, heads, query_length, key_length]
+        attn_shape = (batch_size, query_length, self.heads, key_length)
 
         # query from - [batch, seqlen, dimension] -> [batch, seqlen * heads, head_dim]
         query_shape = query.shape
@@ -144,7 +147,7 @@ class MultiQueryAttention(nn.Module):
         # query - [batch, seqlen * heads, head_dim]
         # key - [batch, seqlen, head_dim]
         # q.k_t - [batch, seqlen * heads, seqlen]
-        # (q.k_t).view(attn_shape) - [batch, heads, seqlen, seqlen]
+        # (q.k_t).view(attn_shape) - [batch, seqlen, heads, seqlen]
         qk = torch.div(
             torch.matmul(query, key.transpose(-2, -1)), math.sqrt(self.head_dim)
         ).view(attn_shape)
@@ -156,7 +159,7 @@ class MultiQueryAttention(nn.Module):
         qk = nn.Softmax(dim=-1)(qk)
         qk = self.dropout(qk) if dropout is not None else qk
 
-        # qk from - [batch, heads, seqlen, seqlen] -> [batch, heads * seqlen, seqlen]
+        # qk from - [batch, seqlen, heads, seqlen] -> [batch, heads * seqlen, seqlen]
         # value - [batch, seqlen, head_dim]
         # torch.matmul(qk, value) -> [batch, heads * seqlen, head_dim]
         # torch.matmul(qk, value).view(query_shape) - [batch, seqlen, dimension]
