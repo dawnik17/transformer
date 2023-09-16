@@ -1,2 +1,2 @@
 include README.md
-recursive-include src/transformer/ *
+recursive-include transformer/ *
