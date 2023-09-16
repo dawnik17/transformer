@@ -1,11 +1,11 @@
-from transformer.model.attn import MultiHeadedAttention
-from transformer.model.mask import Mask
-from transformer.model.utils import (
+from .attn import MultiHeadedAttention
+from .mask import Mask
+from .utils import (
     Embedding,
     PositionalEncoding,
     ResidualConnection,
     LayerNorm,
     FeedForwardNet,
 )
-from transformer.model.encoder import Encoder, EncoderLayer
-from transformer.model.decoder import Decoder, DecoderLayer
+from .encoder import Encoder, EncoderLayer
+from .decoder import Decoder, DecoderLayer

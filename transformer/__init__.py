@@ -1,4 +1,4 @@
-from transformer.model import (
+from .model import (
     MultiHeadedAttention, 
     Mask,
     Embedding,
