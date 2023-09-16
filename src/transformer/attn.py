@@ -23,7 +23,7 @@ class MultiHeadedAttention(nn.Module):
         xq, xk, xv shape - [Batch, SegLen, Dimension]
         """
         assert self.dimension == xq.size(-1)
-        batch_size = query.size(0)
+        batch_size = xq.size(0)
 
         # converting inputs to query, key and value
         query = self.wq(xq)
