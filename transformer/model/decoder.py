@@ -1,4 +1,4 @@
-from src.transformer import (
+from transformer.model import (
     MultiHeadedAttention,
     FeedForwardNet,
     ResidualConnection,
