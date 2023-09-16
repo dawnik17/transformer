@@ -13,7 +13,7 @@ setup(
     author_email="dawnik17@gmail.com",
     license="unlicense",
     zip_safe=False,
-    packages=["src"],
+    packages=["transformer"],
     include_package_data=True,
     classifiers=["Programming Language :: Python :: 3"],
     long_description=long_description
