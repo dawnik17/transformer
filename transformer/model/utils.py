@@ -48,13 +48,13 @@ class PositionalEncoding(nn.Module):
 #         return self.out(self.dropout(F.relu(self.l(input_vec))))
 
 class FeedForwardNet(nn.Module):
-    def __init__(self, dimension, hidden_dim=1024, dropout=0.1, activation="gelu"):
+    def __init__(self, dimension, hidden_dimension=1024, dropout=0.1, activation="gelu"):
         super().__init__()
         self.net = nn.Sequential(
-            nn.Linear(dimension, hidden_dim),
+            nn.Linear(dimension, hidden_dimension),
             nn.ReLU() if activation == "relu" else nn.GELU(),
             nn.Dropout(dropout),
-            nn.Linear(hidden_dim, dimension),
+            nn.Linear(hidden_dimension, dimension),
         )
 
     def forward(self, x):
