@@ -37,16 +37,28 @@ class PositionalEncoding(nn.Module):
         seq_len = input_vec.size(1)
         return self.dropout(input_vec + Variable(self.positional_enc[:, :seq_len]))
 
+# class FeedForwardNet(nn.Module):
+#     def __init__(self, dimension, dff=2048, dropout=0.1):
+#         super().__init__()
+#         self.l = nn.Linear(dimension, dff)
+#         self.out = nn.Linear(dff, dimension)
+#         self.dropout = nn.Dropout(dropout)
+
+#     def forward(self, input_vec):
+#         return self.out(self.dropout(F.relu(self.l(input_vec))))
 
 class FeedForwardNet(nn.Module):
-    def __init__(self, dimension, dff=2048, dropout=0.1):
+    def __init__(self, dimension, hidden_dim=1024, dropout=0.1, activation="gelu"):
         super().__init__()
-        self.l = nn.Linear(dimension, dff)
-        self.out = nn.Linear(dff, dimension)
-        self.dropout = nn.Dropout(dropout)
+        self.net = nn.Sequential(
+            nn.Linear(dimension, hidden_dim),
+            nn.ReLU() if activation == "relu" else nn.GELU(),
+            nn.Dropout(dropout),
+            nn.Linear(hidden_dim, dimension),
+        )
 
-    def forward(self, input_vec):
-        return self.out(self.dropout(F.relu(self.l(input_vec))))
+    def forward(self, x):
+        return self.net(x)
 
 
 class LayerNorm(nn.Module):
