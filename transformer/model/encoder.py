@@ -9,10 +9,12 @@ import copy
 
 
 class EncoderLayer(nn.Module):
-    def __init__(self, dimension, head=8, dropout=0.1):
+    def __init__(self, dimension, hidden_dimension=1024, head=8, dropout=0.1):
         super().__init__()
         self.attn = MultiHeadedAttention(dimension, head, dropout)
-        self.ffnn = FeedForwardNet(dimension, dropout=dropout)
+        self.ffnn = FeedForwardNet(dimension=dimension, 
+                                   hidden_dimension=hidden_dimension, 
+                                   dropout=dropout)
         self.resconn1 = ResidualConnection(dimension, dropout)
         self.resconn2 = ResidualConnection(dimension, dropout)
 
@@ -25,11 +27,11 @@ class EncoderLayer(nn.Module):
 
 
 class Encoder(nn.Module):
-    def __init__(self, number_of_layers, head, dimension, dropout):
+    def __init__(self, number_of_layers, head, dimension, hidden_dimension, dropout):
         super().__init__()
         self.enclays = nn.ModuleList(
             [
-                copy.deepcopy(EncoderLayer(dimension, head, dropout))
+                copy.deepcopy(EncoderLayer(dimension, hidden_dimension, head, dropout))
                 for _ in range(number_of_layers)
             ]
         )
