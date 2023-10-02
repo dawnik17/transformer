@@ -9,5 +9,7 @@ from .model import (
     Encoder, 
     EncoderLayer,
     Decoder, 
-    DecoderLayer
+    DecoderLayer,
+    SequenceGenerationLoss,
+    CustomAdam
 )
